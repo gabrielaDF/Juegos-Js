@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import MemoryGame from "./games/MemoryGame";
 
@@ -6,7 +7,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-blue-600 mb-8">
+        <h1 className="text-3xl font-bold text-blue-900 mb-8">
           Selecciona un Juego
         </h1>
         <nav className="mb-8">
@@ -14,7 +15,7 @@ function App() {
             <li>
               <Link
                 to="/memory-game"
-                className="text-lg font-medium text-blue-500 hover:underline"
+                className="text-lg font-medium text-blue-900 hover:underline"
               >
                 Juego de Memoria
               </Link>

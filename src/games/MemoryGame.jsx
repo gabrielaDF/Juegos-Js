@@ -52,8 +52,8 @@ const MemoryGame = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center ">
-      <Header title="Juego de Memoria: JavaScript" />;
+    <div className="min-h-screen bg-red-100 flex flex-col items-center justify-center ">
+      <Header title="Juego de Memoria: JavaScript" />
       <Board
         cards={cards}
         flippedCards={flippedCards}
