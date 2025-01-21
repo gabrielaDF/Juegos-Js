@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Board from "../components/Board";
+
 const cardsData = [
   { id: 1, text: "Variable", pairId: 1 },
   { id: 2, text: "let x = 5;", pairId: 1 },
@@ -21,14 +22,20 @@ const cardsData = [
 ];
 
 const MemoryGame = () => {
+  const [difficulty, setDifficulty] = React.useState(null);
   const [cards, setCards] = React.useState([]);
   const [flippedCards, setFlippedCards] = React.useState([]);
   const [matchedPairs, setMatchedPairs] = React.useState([]);
 
-  React.useEffect(() => {
-    const shuffledCards = [...cardsData].sort(() => Math.random() - 0.5);
+  const startGame = (level) => {
+    setDifficulty(level);
+    const pairsCount = level === "easy" ? 4 : level === "medium" ? 6 : 8;
+    const selectedCards = cardsData.slice(0, pairsCount * 2);
+    const shuffledCards = [...selectedCards].sort(() => Math.random() - 0.5);
     setCards(shuffledCards);
-  }, []);
+    setFlippedCards([]);
+    setMatchedPairs([]);
+  };
 
   const handleCardClick = (card) => {
     if (
@@ -52,17 +59,49 @@ const MemoryGame = () => {
   };
 
   return (
-    <div className="min-h-screen bg-red-100 flex flex-col items-center justify-center ">
+    <div className="min-h-screen bg-red-100 flex flex-col items-center justify-center">
       <Header title="Juego de Memoria: JavaScript" />
-      <Board
-        cards={cards}
-        flippedCards={flippedCards}
-        matchedPairs={matchedPairs}
-        handleCardClick={handleCardClick}
-      />
-      <p className="text-lg text-gray-700 mt-4">
-        Pares encontrados: {matchedPairs.length}
-      </p>
+      {!difficulty ? (
+        <div className="flex flex-col items-center">
+          <h2 className="text-2xl font-bold">Selecciona la dificultad</h2>
+          <button
+            onClick={() => startGame("easy")}
+            className="bg-green-500 text-white px-4 py-2 m-2"
+          >
+            Fácil
+          </button>
+          <button
+            onClick={() => startGame("medium")}
+            className="bg-yellow-500 text-white px-4 py-2 m-2"
+          >
+            Intermedio
+          </button>
+          <button
+            onClick={() => startGame("hard")}
+            className="bg-red-500 text-white px-4 py-2 m-2"
+          >
+            Difícil
+          </button>
+        </div>
+      ) : (
+        <>
+          <Board
+            cards={cards}
+            flippedCards={flippedCards}
+            matchedPairs={matchedPairs}
+            handleCardClick={handleCardClick}
+          />
+          <p className="text-lg text-gray-700 mt-4">
+            Pares encontrados: {matchedPairs.length}
+          </p>
+          <button
+            onClick={() => setDifficulty(null)}
+            className="bg-blue-500 text-white px-4 py-2 mt-4"
+          >
+            Reiniciar Juego
+          </button>
+        </>
+      )}
     </div>
   );
 };
